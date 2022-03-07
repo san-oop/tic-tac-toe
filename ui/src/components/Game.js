@@ -1,3 +1,4 @@
+import { FaEye } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import useSocket from '../hooks/useSocket';
 import useStateRef from '../hooks/useStateRef';
@@ -9,9 +10,11 @@ function Game() {
   const [hasWon, setHasWon] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState('');
   const [game, setGame, ref] = useStateRef(new Array(9).fill(''));
+  const [activeUsers, setActiveUsers] = useState(0);
 
   useEffect(() => {
     if (socket) {
+      socket.on('activeUserCount', checkForAvailableUsers);
       socket.on('updateMoves', updateGameMoves);
       socket.on('restart', restartGame);
     }
@@ -44,7 +47,7 @@ function Game() {
   const handleCellClick = (event) => {
     const currentIndex = event.target.getAttribute('data-cell-index');
     const currentSymbol = currentPlayer === 'X' ? 'O' : 'X';
-    if (!game[currentIndex] && !hasWon) {
+    if (!game[currentIndex] && !hasWon && activeUsers >= 2) {
       socket.emit('currentMove', [currentIndex, currentSymbol || 'X']);
     }
   };
@@ -55,9 +58,19 @@ function Game() {
     setGame(new Array(9).fill(''));
   };
 
+  const checkForAvailableUsers = (userCount) => {
+    setActiveUsers(userCount);
+  };
+
   return (
     <section>
       <h1 className="game--title">Tic Tac Toe</h1>
+      {activeUsers > 2 && (
+        <div className="game--activeusers">
+          <p>{activeUsers - 2}</p>
+          <FaEye />
+        </div>
+      )}
       <div className="game--container">
         {game.map((playerSymbol, index) => (
           <div

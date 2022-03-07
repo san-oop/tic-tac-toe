@@ -29,3 +29,13 @@
     background-color: #282c34;
     border: 2px solid #dcd8d8;
 }
+
+.game--activeusers {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.game--activeusers p {
+    padding-right: 10px;
+}

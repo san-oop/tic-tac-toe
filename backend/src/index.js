@@ -21,23 +21,23 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
     console.log('a user connected');
-    if (io.engine.clientsCount > 2) { // To limit to 2 players per game
-        socket.emit('err', { message: 'reached the max limit of connections' });
-        socket.disconnect();
-        console.log('Disconnected...');
-        return;
-    }
+
+    if (io.engine.clientsCount <= 2) socket.join('main');
+    else socket.join('waitingRoom');
+
+    io.to('main').emit('activeUserCount', io.engine.clientsCount);
+
     socket.on('disconnect', () => {
+        io.to('main').emit('activeUserCount', io.engine.clientsCount);
         console.log('user disconnected');
     });
+
     socket.on('currentMove', (msg) => {
-        console.log(`message: ${msg}`);
-        io.emit('updateMoves', msg);
+        io.to('main').emit('updateMoves', msg);
     });
 
     socket.on('restart', () => {
-        console.log('Restarted');
-        io.emit('restart');
+        io.to('main').emit('restart');
     });
 });
 
