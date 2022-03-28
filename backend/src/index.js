@@ -33,11 +33,11 @@ io.on('connection', (socket) => {
     });
 
     socket.on('currentMove', (msg) => {
-        io.to('main').emit('updateMoves', msg);
+        io.to(['main', 'waitingRoom']).emit('updateMoves', msg);
     });
 
     socket.on('restart', () => {
-        io.to('main').emit('restart');
+        io.to(['main', 'waitingRoom']).emit('restart');
     });
 });
 
