@@ -1,32 +1,53 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import useSocket from '../../hooks/useSocket';
 import './Create.css';
 
 function Create() {
-  const [roomName, setRoomName] = useState('');
+  const navigate = useNavigate();
+  const [socket] = useSocket();
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('connect', handleNavigation);
+    }
+  }, [socket]);
 
   const handleChange = (event) => {
-    setRoomName(event.target.value);
+    setUserName(event.target.value);
   };
 
   const handleCreate = () => {
-    console.log('clicked', roomName);
+    socket.auth = { userName };
+    socket.connect();
   };
+
+  const handleNavigation = () => {
+    navigate(`/game/${socket.id}`);
+  };
+
   return (
     <form className="create-form">
       <div>
-        <label className="m-10" htmlFor="roomName">
-          Room name
+        <label className="m-10" htmlFor="userName">
+          Name
         </label>
         <input
           className="m-10 input-field"
-          id="roomName"
+          id="userName"
           type="text"
           onChange={handleChange}
-          value={roomName}
+          value={userName}
         />
       </div>
-      <button className="m-10 create-button" onClick={handleCreate} type="button">
+      <button
+        disabled={userName.length < 1}
+        className="m-10 create-button"
+        onClick={handleCreate}
+        type="button"
+      >
         Create
       </button>
     </form>

@@ -13,8 +13,8 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path=":id" element={<Game />} />
-          <Route path="create" element={<Create />} />
+          <Route path="game/create" element={<Create />} />
+          <Route path="game/:id" element={<Game />} />
           <Route
             path="*"
             element={(

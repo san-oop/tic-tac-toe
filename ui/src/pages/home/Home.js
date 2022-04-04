@@ -74,7 +74,7 @@ function Home() {
           ))}
         </div>
       </div>
-      <Link to="/create">
+      <Link to="/game/create">
         <button
           className="add-button"
           type="button"
