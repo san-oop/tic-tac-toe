@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './index.css';
 import Home from './pages/home/Home';
 import Game from './pages/game/Game';
+import Create from './pages/create/Create';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -13,6 +14,7 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path=":id" element={<Game />} />
+          <Route path="create" element={<Create />} />
           <Route
             path="*"
             element={(

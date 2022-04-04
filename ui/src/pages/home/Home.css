@@ -1,0 +1,27 @@
+.active-games-list {
+  width: 250px;
+}
+
+.game-item {
+  display: flex;
+  align-items: center;
+  margin: 20px 0px 20px 0px;
+  text-transform: capitalize;
+  justify-content: space-between;
+}
+
+.add-button {
+  position: fixed;
+  bottom: 5%;
+  right: 10%;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+.plus-icon {
+  font-size: 20px;
+  color: #282c34;
+}
