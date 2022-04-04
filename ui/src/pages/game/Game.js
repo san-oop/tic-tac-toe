@@ -1,10 +1,11 @@
 // import { useState, useEffect } from 'react';
 import './Game.css';
+import GameGrid from '../../components/GameGrid';
 
 function Game() {
   return (
     <div>
-      <p>Game</p>
+      <GameGrid />
     </div>
   );
 }

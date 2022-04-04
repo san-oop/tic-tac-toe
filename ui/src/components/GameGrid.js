@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 import useSocket from '../hooks/useSocket';
 import useStateRef from '../hooks/useStateRef';
 import WINNING_CONDITIONS from '../constants/winningConditions';
-import './Game.css';
+import './GameGrid.css';
 
-function Game() {
+function GameGrid() {
   const [socket] = useSocket();
   const [hasWon, setHasWon] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState('');
@@ -99,4 +99,4 @@ function Game() {
     </section>
   );
 }
-export default Game;
+export default GameGrid;
